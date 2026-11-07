@@ -1,3 +1,4 @@
+import { PROD } from '../mode.js';
 import { Blob, Leaf } from './bits.jsx';
 
 export default function Hero({ onShop, onLight }) {
@@ -8,8 +9,10 @@ export default function Hero({ onShop, onLight }) {
           <p className="eyebrow">Houseplants, shipped from Portland, Oregon</p>
           <h1 id="hero-title">Plants that suit the light you actually have</h1>
           <p className="lead">
-            Tell us how much light your room gets and we will show you what will grow there. Try
-            the filters, add a few plants to your cart and run through the demo checkout.
+            Tell us how much light your room gets and we will show you what will grow there.{' '}
+            {PROD
+              ? 'Try the filters, add a few plants to your cart and check out securely.'
+              : 'Try the filters, add a few plants to your cart and run through the demo checkout.'}
           </p>
           <div className="hero-actions">
             <a className="btn btn-primary" href="#shop" onClick={(e) => { e.preventDefault(); onShop(); }}>

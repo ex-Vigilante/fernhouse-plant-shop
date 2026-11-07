@@ -1,3 +1,5 @@
+import { PROD } from '../mode.js';
+import { Link } from '../router.jsx';
 import { Blob, Leaf } from './bits.jsx';
 
 const LIGHTS = [
@@ -58,10 +60,23 @@ export function Footer() {
       <div className="wrap footer-grid">
         <div>
           <p className="footer-brand"><Leaf className="wordmark-leaf" /> Fernhouse Plant Co.</p>
-          <p className="footer-note">A fictional plant shop. Demo only: no orders are fulfilled and no payments are taken.</p>
+          {PROD ? (
+            <p className="footer-note">Houseplants shipped from Portland, Oregon. Payments are handled securely by Stripe.</p>
+          ) : (
+            <p className="footer-note">A fictional plant shop. Demo only: no orders are fulfilled and no payments are taken.</p>
+          )}
         </div>
+        <nav aria-label="Store policies">
+          <ul className="footer-links">
+            <li><Link to="/shipping-returns">Shipping &amp; returns</Link></li>
+            <li><Link to="/privacy">Privacy policy</Link></li>
+            <li><Link to="/terms">Terms of sale</Link></li>
+          </ul>
+        </nav>
       </div>
-      <div className="wrap legal">&copy; 2026 Fernhouse Plant Co. (fictional). Photos from Unsplash.</div>
+      <div className="wrap legal">
+        {PROD ? '© 2026 Fernhouse Plant Co., Portland, OR. Photos from Unsplash.' : '© 2026 Fernhouse Plant Co. (fictional). Photos from Unsplash.'}
+      </div>
     </footer>
   );
 }

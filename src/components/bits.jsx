@@ -76,11 +76,12 @@ export function AddButton({ product, onAdd, qty = 1, room = product.stock, class
 }
 
 export function Stars({ rating, reviews }) {
+  if (!rating) return null;
   return (
     <span className="stars">
-      <span className="sr-only">Rated {rating.toFixed(1)} out of 5 from {reviews} reviews</span>
+      <span className="sr-only">Rated {rating.toFixed(1)} out of 5{reviews > 0 ? ` from ${reviews} reviews` : ''}</span>
       <span aria-hidden="true">&#9733; {rating.toFixed(1)}</span>
-      <span className="stars-count" aria-hidden="true">({reviews})</span>
+      {reviews > 0 && <span className="stars-count" aria-hidden="true">({reviews})</span>}
     </span>
   );
 }

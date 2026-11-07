@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useCart } from '../cart.jsx';
-import { products, LIGHT_LABEL, SIZE_LABEL, money } from '../data/products.js';
+import { LIGHT_LABEL, SIZE_LABEL, money } from '../data/products.js';
+import { useProducts } from '../products.jsx';
 import { useDebouncedCallback } from '../hooks.js';
 import { AddButton, Img, Leaf, Stars } from './bits.jsx';
 
@@ -66,7 +67,10 @@ function Card({ p, onView, onAdd }) {
   );
 }
 
+const WORDS = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty'];
+
 export default function Catalog({ filters, update, clear, active, onView, onAdd }) {
+  const { products, status, reload } = useProducts();
   const [text, setText] = useState(filters.q);
   const pushQ = useDebouncedCallback((v) => update({ q: v }), 250);
 
@@ -79,14 +83,14 @@ export default function Catalog({ filters, update, clear, active, onView, onAdd 
     clear();
   };
 
-  const results = useMemo(() => applyFilters(products, filters), [filters]);
+  const results = useMemo(() => applyFilters(products, filters), [products, filters]);
 
   return (
     <section id="shop" className="section shop" aria-labelledby="shop-title">
       <div className="wrap">
         <div className="section-head">
           <h2 id="shop-title">The plant shelf</h2>
-          <p>Sixteen plants we grow on or source from small Oregon nurseries. Narrow them down below.</p>
+          <p>{WORDS[products.length] || products.length} plants we grow on or source from small Oregon nurseries. Narrow them down below.</p>
         </div>
 
         <form className="filters" role="search" aria-label="Filter plants" onSubmit={(e) => e.preventDefault()}>
@@ -142,7 +146,16 @@ export default function Catalog({ filters, update, clear, active, onView, onAdd 
           )}
         </div>
 
-        {results.length > 0 ? (
+        {status === 'loading' ? (
+          <p className="notice" role="status">Loading the plant shelf...</p>
+        ) : status === 'error' ? (
+          <div className="empty">
+            <Leaf className="empty-leaf" />
+            <h3>The shelf will not load right now</h3>
+            <p>Check your connection and try again.</p>
+            <button type="button" className="btn btn-primary" onClick={reload}>Try again</button>
+          </div>
+        ) : results.length > 0 ? (
           <ul className="grid">
             {results.map((p) => (
               <Card key={p.id} p={p} onView={onView} onAdd={onAdd} />
