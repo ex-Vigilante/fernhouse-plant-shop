@@ -8,7 +8,7 @@ import QuickView from './components/QuickView.jsx';
 import CartDrawer from './components/CartDrawer.jsx';
 import Checkout from './components/Checkout.jsx';
 import Confirmation from './components/Confirmation.jsx';
-import { Footer, LightGuide, Testimonials } from './components/Sections.jsx';
+import { Footer, LightGuide } from './components/Sections.jsx';
 
 function Shop() {
   const cart = useCart();
@@ -64,7 +64,6 @@ function Shop() {
                 scrollTo('shop');
               }}
             />
-            <Testimonials />
           </>
         )}
         {view === 'checkout' && (

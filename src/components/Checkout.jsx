@@ -22,10 +22,6 @@ const zipRe = /^\d{5}$/;
 const validators = {
   name: (v) => (v.trim().length < 2 ? 'Enter your full name.' : ''),
   email: (v) => (!v.trim() ? 'Enter your email address.' : emailRe.test(v.trim()) ? '' : 'Enter a valid email, like name@example.com.'),
-  phone: (v) => {
-    const d = v.replace(/\D/g, '').length;
-    return v.trim() && (d < 10 || d > 11) ? 'Enter a 10-digit phone number or leave it blank.' : '';
-  },
   address: (v, all) => (all.shipping === 'pickup' || v.trim().length >= 4 ? '' : 'Enter your street address.'),
   city: (v, all) => (all.shipping === 'pickup' || v.trim() ? '' : 'Enter your city.'),
   state: (v, all) => (all.shipping === 'pickup' || STATES.includes(v) ? '' : 'Choose your state.'),
@@ -33,7 +29,7 @@ const validators = {
 };
 
 const omitDigits = ({ digits, ...rest }) => rest;
-const initial = { name: '', email: '', phone: '', address: '', city: '', state: '', zip: '', shipping: 'standard' };
+const initial = { name: '', email: '', address: '', city: '', state: '', zip: '', shipping: 'standard' };
 
 export default function Checkout({ onBack, onPlaced }) {
   const { items, subtotal, clear } = useCart();
@@ -131,10 +127,7 @@ export default function Checkout({ onBack, onPlaced }) {
             <fieldset>
               <legend>Contact</legend>
               {field('name', 'Full name', { autoComplete: 'name' })}
-              <div className="two">
-                {field('email', 'Email', { type: 'email', autoComplete: 'email', inputMode: 'email' })}
-                {field('phone', 'Phone (optional)', { type: 'tel', autoComplete: 'tel', maxLength: 18 })}
-              </div>
+              {field('email', 'Email', { type: 'email', autoComplete: 'email', inputMode: 'email' })}
             </fieldset>
 
             <fieldset>
@@ -174,14 +167,6 @@ export default function Checkout({ onBack, onPlaced }) {
                   </div>
                 </>
               )}
-            </fieldset>
-
-            <fieldset>
-              <legend>Payment</legend>
-              <div className="demo-pay">
-                <p><strong>Demo store, no real payment is taken.</strong></p>
-                <p>This is a portfolio project, so there is no card form. Please do not type card details anywhere on this page. The button below places a pretend order.</p>
-              </div>
             </fieldset>
 
             <button type="submit" className="btn btn-primary btn-lg">Place demo order &middot; {money(total)}</button>

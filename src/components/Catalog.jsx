@@ -123,24 +123,6 @@ export default function Catalog({ filters, update, clear, active, onView, onAdd 
               <option value="L">Large</option>
             </select>
           </div>
-          <div className="field">
-            <label htmlFor="f-price">Price</label>
-            <select id="f-price" value={filters.price} onChange={(e) => update({ price: e.target.value })}>
-              <option value="">Any price</option>
-              <option value="u40">Under $40</option>
-              <option value="40-80">$40 to $80</option>
-              <option value="o80">Over $80</option>
-            </select>
-          </div>
-          <div className="field">
-            <label htmlFor="f-sort">Sort by</label>
-            <select id="f-sort" value={filters.sort} onChange={(e) => update({ sort: e.target.value })}>
-              <option value="featured">Featured</option>
-              <option value="price-asc">Price, low to high</option>
-              <option value="price-desc">Price, high to low</option>
-              <option value="name">Name, A to Z</option>
-            </select>
-          </div>
           <label className="toggle" htmlFor="f-pet">
             <input id="f-pet" type="checkbox" checked={filters.pet} onChange={(e) => update({ pet: e.target.checked })} />
             <span className="toggle-ui" aria-hidden="true" />

@@ -8,9 +8,8 @@ export default function Hero({ onShop, onLight }) {
           <p className="eyebrow">Houseplants, shipped from Portland, Oregon</p>
           <h1 id="hero-title">Plants that suit the light you actually have</h1>
           <p className="lead">
-            North-facing flat? Bright south window? Every plant here is sorted by the light it
-            tolerates, how big it gets and whether it is safe around cats and dogs, so you can
-            skip the guesswork.
+            Tell us how much light your room gets and we will show you what will grow there. Try
+            the filters, add a few plants to your cart and run through the demo checkout.
           </p>
           <div className="hero-actions">
             <a className="btn btn-primary" href="#shop" onClick={(e) => { e.preventDefault(); onShop(); }}>

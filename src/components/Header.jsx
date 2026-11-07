@@ -30,8 +30,6 @@ export default function Header({ count, onCart, onNav, checkout }) {
           <ul className="nav-list">
             <li><a href="#shop" onClick={go('shop')}>Shop</a></li>
             <li><a href="#light" onClick={go('light')}>Light guide</a></li>
-            <li><a href="#reviews" onClick={go('reviews')}>Reviews</a></li>
-            <li><a href="#footer" onClick={go('footer')}>Newsletter</a></li>
           </ul>
         </nav>
         <button type="button" className="cart-btn" onClick={onCart} aria-haspopup="dialog" aria-label={`Open cart, ${count} ${count === 1 ? 'item' : 'items'}`}>
